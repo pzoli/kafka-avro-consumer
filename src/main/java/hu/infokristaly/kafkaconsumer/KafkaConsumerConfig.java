@@ -86,7 +86,7 @@ public class KafkaConsumerConfig {
     //@KafkaListener(id = "avro-test", groupId = "${spring.kafka.consumer.group-id}", topicPartitions= {
     //        @TopicPartition(topic = "avro-test", partitions = { "0" })})
     @KafkaListener(id = "avro-test", groupId = "${spring.kafka.consumer.group-id}", topics = "avro-test")
-    public void listenGroupFoo(ConsumerRecord<String, User> user) { //GenericData.Record
+    public void listenGroupFoo(ConsumerRecord<String, User> user) {
         System.out.println("Received Message in group1: " + user.value());
     }
 }
