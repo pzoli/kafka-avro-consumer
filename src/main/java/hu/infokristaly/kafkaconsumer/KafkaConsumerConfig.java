@@ -32,6 +32,15 @@ public class KafkaConsumerConfig {
     @Value("${spring.kafka.properties.sasl.jaas.config}")
     private String kafka_jaas_config;
 
+    @Value("${avro.schema_registry.url}")
+    private String avro_schema_registry_url ;
+
+    @Value("${spring.kafka.properties.sasl.mechanism}")
+    private String sasl_mechanism;
+
+    @Value("${spring.kafka.properties.security.protocol}")
+    private String security_protocol;
+
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
         Map<String, Object> configProps = new HashMap<>();
@@ -51,18 +60,15 @@ public class KafkaConsumerConfig {
                 ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG,
                 "org.apache.kafka.clients.consumer.RangeAssignor");
         configProps.put(
-                        ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG,
-                        "org.apache.kafka.clients.consumer.RangeAssignor");
-        configProps.put(
-                SaslConfigs.SASL_MECHANISM, "PLAIN");
+                SaslConfigs.SASL_MECHANISM, sasl_mechanism); //"PLAIN"
         configProps.put(
                 CommonClientConfigs.SECURITY_PROTOCOL_CONFIG,
-                "SASL_PLAINTEXT");
+                security_protocol); //"SASL_PLAINTEXT"
         configProps.put(
                 SaslConfigs.SASL_JAAS_CONFIG,
                 kafka_jaas_config);
         configProps.put(
-                "schema.registry.url", "http://schema-registry-headless.kafka.svc.cluster.local:8081");
+                "schema.registry.url", avro_schema_registry_url); //"http://schema-registry-headless.kafka.svc.cluster.local:8081"
 
         return new DefaultKafkaConsumerFactory<>(configProps);
     }
