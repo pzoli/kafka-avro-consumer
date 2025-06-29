@@ -62,15 +62,15 @@ public class KafkaConsumerConfig {
                 ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG,
                 "org.apache.kafka.clients.consumer.RangeAssignor");
         configProps.put(
-                SaslConfigs.SASL_MECHANISM, sasl_mechanism); //"PLAIN"
+                SaslConfigs.SASL_MECHANISM, sasl_mechanism);
         configProps.put(
                 CommonClientConfigs.SECURITY_PROTOCOL_CONFIG,
-                security_protocol); //"SASL_PLAINTEXT"
+                security_protocol);
         configProps.put(
                 SaslConfigs.SASL_JAAS_CONFIG,
                 kafka_jaas_config);
         configProps.put(
-                "schema.registry.url", avro_schema_registry_url); //"http://schema-registry-headless.kafka.svc.cluster.local:8081"
+                "schema.registry.url", avro_schema_registry_url);
 
         return new DefaultKafkaConsumerFactory<>(configProps);
     }
