@@ -5,8 +5,10 @@ import java.util.Map;
 
 import hu.infokristaly.kafkaconsumer.avro.User;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
+import org.apache.avro.generic.GenericData;
 import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.config.SaslConfigs;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -81,10 +83,10 @@ public class KafkaConsumerConfig {
     }
 
     
-    //@KafkaListener(id = "test", groupId = "${spring.kafka.consumer.group-id}", topicPartitions= {
-    //        @TopicPartition(topic = "test", partitions = { "0" })})
-    @KafkaListener(id = "test", groupId = "${spring.kafka.consumer.group-id}", topics = "test")
-    public void listenGroupFoo(User user) {
-        System.out.println("Received Message in group1: " + user);
+    //@KafkaListener(id = "avro-test", groupId = "${spring.kafka.consumer.group-id}", topicPartitions= {
+    //        @TopicPartition(topic = "avro-test", partitions = { "0" })})
+    @KafkaListener(id = "avro-test", groupId = "${spring.kafka.consumer.group-id}", topics = "avro-test")
+    public void listenGroupFoo(ConsumerRecord<String, User> user) { //GenericData.Record
+        System.out.println("Received Message in group1: " + user.value());
     }
 }
